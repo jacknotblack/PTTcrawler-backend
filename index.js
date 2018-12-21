@@ -57,7 +57,8 @@ const Game = sequelize.define(
       autoIncrement: true
     },
     name: Sequelize.STRING(30),
-    lowest_price: Sequelize.INTEGER(5)
+    lowest_price: Sequelize.INTEGER(5),
+    lp_link: Sequelize.STRING(100)
   },
   {
     timestamps: false
