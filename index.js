@@ -3,6 +3,8 @@ const logger = require("koa-logger");
 const Router = require("koa-router");
 const Sequelize = require("sequelize");
 
+const PORT = process.env.PORT || 80;
+
 const sequelize = new Sequelize(
   "heroku_6b3036d88f374e5",
   "b533748927bff2",
@@ -85,4 +87,4 @@ router.get("/about", async ctx => {
 app.use(logger());
 
 app.use(router.routes());
-app.listen(3002);
+app.listen(PORT);
