@@ -59,7 +59,8 @@ const Game = sequelize.define(
     },
     name: Sequelize.STRING(30),
     lowest_price: Sequelize.INTEGER(5),
-    lp_link: Sequelize.STRING(100)
+    lp_link: Sequelize.STRING(100),
+    img: Sequelize.STRING(100)
   },
   {
     timestamps: false
