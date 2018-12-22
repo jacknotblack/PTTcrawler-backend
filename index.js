@@ -1,4 +1,5 @@
 const Koa = require("koa");
+const cors = require("koa2-cors");
 const logger = require("koa-logger");
 const Router = require("koa-router");
 const Sequelize = require("sequelize");
@@ -66,6 +67,7 @@ const Game = sequelize.define(
 );
 
 const app = new Koa();
+app.use(cors());
 const router = Router();
 
 async function asyncForEach(array, callback) {
