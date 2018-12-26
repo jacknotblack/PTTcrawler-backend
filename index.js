@@ -41,7 +41,13 @@ const Post = sequelize.define(
     createdAt: Sequelize.BIGINT,
     updatedAt: Sequelize.BIGINT,
     version: Sequelize.BIGINT,
-    gameID: Sequelize.INTEGER
+    gameID: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "Game",
+        key: "id"
+      }
+    }
   },
   {
     timestamps: false
@@ -65,6 +71,10 @@ const Game = sequelize.define(
   }
 );
 
+Game.hasMany(Post, { foreignKey: "gameID", sourceKey: "id" });
+Post.belongsTo(Game, { foreignKey: "gameID", sourceKey: "id" });
+// sequelize.sync().then(console.log(123));
+
 const app = new Koa();
 const router = Router();
 
@@ -75,14 +85,21 @@ async function asyncForEach(array, callback) {
 }
 
 // Router -> /
-router.get("/games", async ctx => {
+router.get("games", "/games", async ctx => {
   const games = await Game.findAll().map(data => data.dataValues);
   ctx.body = games;
 });
 
 // Router -> /about
-router.get("/about", async ctx => {
-  ctx.body = "About Me";
+router.get("game", "/game/:id", async ctx => {
+  const game = await Game.findByPk(ctx.params.id);
+  // const game = await Game.findOne({
+  //   where: {
+  //     id: ctx.params.id
+  //   }
+  // });
+  const posts = await game.getPosts();
+  ctx.body = posts;
 });
 
 app.use(logger());
