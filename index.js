@@ -1,4 +1,5 @@
 const Koa = require("koa");
+const cors = require("koa2-cors");
 const logger = require("koa-logger");
 const Router = require("koa-router");
 const Sequelize = require("sequelize");
@@ -64,7 +65,8 @@ const Game = sequelize.define(
     },
     name: Sequelize.STRING(30),
     lowest_price: Sequelize.INTEGER(5),
-    lp_link: Sequelize.STRING(100)
+    lp_link: Sequelize.STRING(100),
+    img: Sequelize.STRING(100)
   },
   {
     timestamps: false
@@ -76,6 +78,7 @@ Post.belongsTo(Game, { foreignKey: "gameID", sourceKey: "id" });
 // sequelize.sync().then(console.log(123));
 
 const app = new Koa();
+app.use(cors());
 const router = Router();
 
 async function asyncForEach(array, callback) {
