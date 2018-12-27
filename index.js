@@ -66,6 +66,7 @@ const Game = sequelize.define(
     name: Sequelize.STRING(30),
     lowest_price: Sequelize.INTEGER(5),
     lp_link: Sequelize.STRING(100),
+    post_count: Sequelize.INTEGER(3),
     img: Sequelize.STRING(100)
   },
   {
@@ -89,7 +90,9 @@ async function asyncForEach(array, callback) {
 
 // Router -> /
 router.get("games", "/games", async ctx => {
-  const games = await Game.findAll().map(data => data.dataValues);
+  const games = await Game.findAll({
+    order: ['post_count', 'DESC']
+  }).map(data => data.dataValues);
   ctx.body = games;
 });
 
