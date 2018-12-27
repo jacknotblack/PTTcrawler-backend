@@ -91,7 +91,7 @@ async function asyncForEach(array, callback) {
 // Router -> /
 router.get("games", "/games", async ctx => {
   const games = await Game.findAll({
-    order: ['post_count', 'DESC']
+    order: [['post_count', 'DESC']]
   }).map(data => data.dataValues);
   ctx.body = games;
 });
