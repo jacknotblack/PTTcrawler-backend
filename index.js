@@ -35,13 +35,13 @@ const Post = sequelize.define(
       autoIncrement: true
     },
     title: Sequelize.STRING(100),
-    gameName: Sequelize.STRING(50),
+    // gameName: Sequelize.STRING(50),
     price: Sequelize.BIGINT,
     postAt: Sequelize.BIGINT,
     link: Sequelize.STRING(100),
     createdAt: Sequelize.BIGINT,
-    updatedAt: Sequelize.BIGINT,
-    version: Sequelize.BIGINT,
+    // updatedAt: Sequelize.BIGINT,
+    // version: Sequelize.BIGINT,
     gameID: {
       type: Sequelize.INTEGER,
       references: {
@@ -65,8 +65,8 @@ const Game = sequelize.define(
     },
     name: Sequelize.STRING(30),
     lowest_price: Sequelize.INTEGER(5),
-    lp_link: Sequelize.STRING(100),
-    post_count: Sequelize.INTEGER(3),
+    // lp_link: Sequelize.STRING(100),
+    // post_count: Sequelize.INTEGER(3),
     img: Sequelize.STRING(100)
   },
   {
@@ -104,7 +104,10 @@ router.get("game", "/game/:id", async ctx => {
   //     id: ctx.params.id
   //   }
   // });
-  const posts = await game.getPosts();
+  const posts = await game.getPosts({
+    order: [['price', 'ASC']],
+    limit: 100
+  });
   ctx.body = posts;
 });
 
